@@ -1,0 +1,101 @@
+
+CREATE TABLE municipio
+(cd_municipio INTEGER,
+ nm_municip VARCHAR(50)
+ sg_uf      char(8)
+);
+
+CREATE TABLE endereco
+(cd_endereco INTEGER,
+ ds_logradouro VARCHAR(50)
+ ds_complemento VARCHAR(50)
+ nm_bairro 	VARCHAR(30)
+ nr_cep		CHAR(8)
+ cd_municipio   INTEGER 
+);
+
+CREATE TABLE prestador serviço
+(cd_prestador INTEGER,
+ nm_prestador VARCHAR(50)
+ nr_telefone  VARCHAR(15)
+ ds_email     VARCHAR(50)
+ cd_endereco  INTEGER 
+);
+
+CREATE TABLE servico_prestador
+(cd_prestador INTEGER,
+ cd_servico   INTEGER,
+);
+
+CREATE TABLE serviço
+(cd_servico INTEGER,
+ ds_servico VARCHAR(50)
+ vl_servico DECIMAL(6,2)
+);
+
+CREATE TABLE agendamento serviço
+(nr_agendamento INTEGER,
+ cd_servico INTEGER,
+ qt_servico int
+ vl_servico DECIMAL(6,2)
+);
+
+CREATE TABLE agendamento
+(nr_agendamento INTEGER,
+ dt_agendamento DATE
+ hr_agendamento TIME
+ cd_prestador INTEGER,
+);
+
+CREATE TABLE cliente
+CREATE TABLE prestador serviço
+(cd_cliente INTEGER,
+ nm_cliente VARCHAR(50)
+ nr_telefone  VARCHAR(15)
+ ds_email     VARCHAR(50)
+ dt_nascimento DATE
+ cd_endereco  INTEGER,
+);
+
+CREATE TABLE animal
+(nm_animal VARCHAR(50)
+ ds_animal VARCHAR(50)
+ dt_nascimento DATE
+ tp_porte  INTEGER,
+ cd_cliente INTEGER,
+);
+
+CREATE TABLE raca
+(cd_raca INTEGER,
+ nm_raca VARCHAR(50)
+ cd_especie INTEGER, 
+);
+
+CREATE TABLE espécie
+(cd_especie INTEGER,
+ nm_especie VARCHAR(30)
+);
+
+CREATE TABLE nota_fiscal
+(nr_total_fiscal INTEGER,
+ dt_emissao DATE
+ vl_total DECIMAL(8,2)
+ cd_cliente INTEGER,
+);
+
+CREATE TABLE item_nota_fiscal
+(nr_nota_fiscal INTEGER,
+ cd_produto INTEGER,
+ qt_produto int
+ vl_produto DECIMAL(8,2)
+);
+
+CREATE TABLE produto
+(cd_produto INTEGER,
+ nm_produto VARCHAR(50)
+ ds_produto VARCHAR(50)
+ vl_custo DECIMAL(8,2)
+ vl_venda DECIMAL(8,2)
+ qt_estoque int
+ cd_categoria INTEGER
+);

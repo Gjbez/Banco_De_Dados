@@ -1,0 +1,96 @@
+-- Adicionando respectivas restrições e PK
+CREATE TABLE funcionario (
+cd_funcionario INTEGER,
+cd_hotel INTEGER,   
+nm_funcionario VARCHAR(50),
+ds_email VARCHAR(50),
+CONSTRAINT funcionario_pk PRIMARY KEY (cd_funcionario)
+);
+
+CREATE TABLE hotel (
+cd_hotel INTEGER,   
+nm_hotel VARCHAR(50),
+ds_website VARCHAR(50),
+ds_email VARCHAR(50),
+CONSTRAINT hotel_pk PRIMARY KEY (cd_hotel)
+);
+
+CREATE TABLE quarto (
+nr_quarto INTEGER,
+cd_hotel INTEGER,   
+cd_categoria INTEGER,
+ds_quarto VARCHAR(50),
+nr_ocupantes INTEGER,
+CONSTRAINT quarto_pk PRIMARY KEY (nr_quarto)
+);
+
+CREATE TABLE categoria (
+cd_categoria INTEGER,
+ds_categoria VARCHAR(50),
+CONSTRAINT categoria_pk PRIMARY KEY (cd_categoria)
+);
+
+ALTER TABLE funcionario ADD CONSTRAINT funcionario_funcionario_fk FOREIGN KEY funcionario (cd_hotel)
+REFERENCES funcionario (cd_hotel);
+
+ALTER TABLE quarto ADD CONSTRAINT quarto_quarto_fk FOREIGN KEY quarto (cd_hotel,cd_categoria)
+REFERENCES quarto (cd_hotel,cd_categoria);
+
+-- Alterando o conteúdo das tables funcionario e categoria
+ALTER TABLE funcionario
+ ALTER COLUMN ds_email VARCHAR(100);
+ 
+ALTER TABLE categoria
+   ADD CONSTRAINT categoria_uk UNIQUE (ds_categoria);
+ 
+-- Adicionando conteúdo às tables
+INSERT INTO hotel (cd_hotel,nm_hotel,ds_website,ds_email) VALUES
+(1,hotel azul,hotelazul.org,hotelazul@gmail.com),
+(2,hotel preto,hotelpreto.org,hotelpreto@gmail.com),
+(3,hotel vermelho,hotelvermelho.org,hotelavermelho@gmail.com);
+
+INSERT INTO quarto (nr_quarto,cd_hotel,cd_categoria,ds_quarto,nr_ocupantes) VALUES
+(1,1,2,tamanho médio,4),
+(2,1,2,tamanho pequeno,2),
+(3,1,2,tamanho grande,7),
+(4,2,1,tamanho médio,5),
+(5,2,1,tamanho pequeno,3),
+(6,2,1,tamanho grande,8),
+(7,3,3,tamanho médio,3),
+(8,3,3,tamanho pequeno,1),
+(9,3,3,tamanho grande,4),
+(10,1,2,tamanho médio,3);
+
+INSERT INTO categoria (cd_categoria,ds_categoria) VALUES
+(1,Fechado),
+(2,Aberto),
+(3,Ocupado);
+
+INSERT INTO funcionario (cd_funcionario,cd_hotel,nm_funcionario,ds_email) VALUES
+(1,1,joao,joao@gmail.com),
+(2,2,alan,alan@gmail.com),
+(3,3,pedro,pedro@gmail.com),
+(4,1,george,george@gmail.com),
+(5,2,arthur,arthur@gmail.com);
+
+-- Listando conteúdos das tables
+
+SELECT h.nm_hotel,f.nm_email
+FROM funcionario f,hotel h
+WHERE f.cd_funcionario = h.cd_hotel
+ORDER BY h.nm_hotel,f.nm_funcionario ASC;
+
+SELECT h.nm_hotel,c.nr_ocupantes
+FROM hotel h,categoria c
+WHERE c.cd_categoria = h.cd_hotel
+GROUP BY h.nm_hotel
+ORDER BY c.nr_ocupantes DESC;
+
+SELECT h.cd_hotel,h.nm_hotel, q.nr_quarto 
+FROM hotel h, quarto q,categoria c
+WHERE h.cd_hotel = q.nr_quarto AND q.nr_quarto = c.cd_categoria
+GROUP BY c.ds_categoria;
+
+
+-- feito por Guilherme Ricardo Bez Junior
+
